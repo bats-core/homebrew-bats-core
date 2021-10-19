@@ -4,7 +4,7 @@ class BatsFile < Formula
     url "https://github.com/bats-core/bats-file/archive/refs/tags/v0.3.0.tar.gz"
     head "https://github.com/bats-core/bats-file.git"
     version "v0.3.0"
-    sha256 ""
+    sha256 "54d1c8b1908608aef8e46ac17d4001a75119e279662aeac4e5859ce780515362"
     license "CC0 1.0 Universal"
 
     def install

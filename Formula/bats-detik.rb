@@ -4,7 +4,7 @@ class BatsDetik < Formula
     url "https://github.com/bats-core/bats-detik/archive/refs/tags/v1.1.0.tar.gz"
     head "https://github.com/bats-core/bats-detik.git"
     version "v1.1.0"
-    sha256 ""
+    sha256 "1467f5f1d51211a0cb163cfceee65796e710fe8b3f4b6731d404eb075e9147e3"
     license "CC0 1.0 Universal"
 
     def install

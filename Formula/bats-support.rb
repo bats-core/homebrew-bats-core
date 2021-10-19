@@ -4,7 +4,7 @@ class BatsSupport < Formula
     url "https://github.com/bats-core/bats-support/archive/refs/tags/v0.3.0.tar.gz"
     head "https://github.com/bats-core/bats-support.git"
     version "v0.3.0"
-    sha256 ""
+    sha256 "7815237aafeb42ddcc1b8c698fc5808026d33317d8701d5ec2396e9634e2918f"
     license "CC0 1.0 Universal"
 
     def install
