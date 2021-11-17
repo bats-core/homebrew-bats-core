@@ -28,4 +28,3 @@ class BatsSupport < Formula
       system "bats", "#{lib}/bats-support/test"
     end
 end
-
