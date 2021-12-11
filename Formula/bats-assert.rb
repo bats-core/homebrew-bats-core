@@ -1,6 +1,6 @@
 class BatsAssert < Formula
   desc "Common assertions for Bats"
-  homepage "https://github.com/bats-core/homebrew-bats-core"
+  homepage "https://github.com/bats-core/bats-assert"
   url "https://github.com/bats-core/bats-assert/archive/refs/tags/v2.0.0.tar.gz"
   sha256 "15dbf1abb98db785323b9327c86ee2b3114541fe5aa150c410a1632ec06d9903"
   license "MIT"
