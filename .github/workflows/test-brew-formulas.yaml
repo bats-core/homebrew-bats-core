@@ -2,7 +2,8 @@ name: test-formulas
 
 on:
   push:
-    branches: [ main ]
+    #branches: [ main ]
+    branches: [ bats-file-detik-and-support ]
   pull_request:
   workflow_dispatch:
 
