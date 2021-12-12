@@ -40,10 +40,6 @@ class BatsAssert < Formula
       @test "assert equal" {
         assert_equal '42' '42'
       }
-
-      @test "assert not_equal" {
-        assert_not_equal '42' '1'
-      }
     EOS
     ENV["TEST_DEPS_DIR"] = "#{HOMEBREW_PREFIX}/lib"
     system "bats", "test.bats"
