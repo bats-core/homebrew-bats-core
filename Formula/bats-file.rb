@@ -25,7 +25,32 @@ class BatsFile < Formula
   end
 
   test do
+    (testpath/"test.bats").write <<~EOS
+      setup() {
+        load '#{HOMEBREW_PREFIX}/lib/bats-support/load.bash'
+        load '#{HOMEBREW_PREFIX}/lib/bats-file/load.bash'
+      }
+
+      @test 'assert_file_exist() <file>: returns 0 if <file> exists' {
+        local -r file="myfile"
+        run assert_file_exist "$file"
+        [ "$status" -eq 0 ]
+        [ "${#lines[@]}" -eq 0 ]
+      }
+
+      @test 'assert_file_exist() <file>: returns 1 and displays path if <file> does not exist' {
+        local -r file="mydir"
+        run assert_file_exist "$file"
+        [ "$status" -eq 1 ]
+        [ "${#lines[@]}" -eq 3 ]
+        [ "${lines[0]}" == '-- file does not exist --' ]
+        [ "${lines[1]}" == "path : $file" ]
+        [ "${lines[2]}" == '--' ]
+      }
+    EOS
     ENV["TEST_DEPS_DIR"] = "#{HOMEBREW_PREFIX}/lib"
-    system "bats", "#{lib}/bats-file/test"
+    system "touch", "myfile"
+    system "touch", "mydir"
+    system "bats", "test.bats"
   end
 end
