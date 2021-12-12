@@ -46,6 +46,6 @@ class BatsAssert < Formula
       }
     EOS
     ENV["TEST_DEPS_DIR"] = "#{HOMEBREW_PREFIX}/lib"
-    system "bats", "testpath/test.bats"
+    system "bats", "test.bats"
   end
 end
