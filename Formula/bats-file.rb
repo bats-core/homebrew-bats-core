@@ -49,8 +49,8 @@ class BatsFile < Formula
       }
     EOS
     ENV["TEST_DEPS_DIR"] = "#{HOMEBREW_PREFIX}/lib"
-    system "touch", "myfile"
-    system "touch", "mydir"
+    File.write("myfile", "")
+    Dir.mkdir 'mydir'
     system "bats", "test.bats"
   end
 end
