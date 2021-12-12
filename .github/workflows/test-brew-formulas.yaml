@@ -31,16 +31,13 @@ jobs:
         run: brew test Formula/bats-assert.rb
       - name: Bats-file AUDIT
         run: brew audit --new-formula --formula Formula/bats-file.rb
-        continue-on-error: true
       - name: Bats-file INSTALL
         run: brew install --build-from-source --verbose bats-file
       - name: Bats-file TEST
         run: brew test Formula/bats-file.rb
-        continue-on-error: true
       - name: Bats-detik AUDIT
         run: brew audit --new-formula --formula Formula/bats-detik.rb
       - name: Bats-detik INSTALL
         run: brew install --build-from-source --verbose bats-detik
       - name: Bats-detik TEST
         run: brew test Formula/bats-detik.rb
-        continue-on-error: true
