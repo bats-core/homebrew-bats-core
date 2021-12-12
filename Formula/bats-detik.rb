@@ -8,7 +8,9 @@ class BatsDetik < Formula
 
   def install
     mkdir "bats-detik"
-    mv "lib", "bats-detik/"
+    mv "lib/detik.bash", "bats-detik/"
+    mv "lib/utils.bash", "bats-detik/"
+    mv "lib/linter.bash", "bats-detik/"
     mv "examples", "bats-detik/"
     mv "tests", "bats-detik/"
     mv "Dockerfile", "bats-detik/"
@@ -19,8 +21,8 @@ class BatsDetik < Formula
     <<~EOS
       To load the bats-detik lib in your bats test:
 
-          load '#{HOMEBREW_PREFIX}/lib/bats-detik/lib/utils'
-          load '#{HOMEBREW_PREFIX}/lib/bats-detik/lib/detik'
+          load '#{HOMEBREW_PREFIX}/lib/bats-detik/utils.bash'
+          load '#{HOMEBREW_PREFIX}/lib/bats-detik/detik.bash'
 
           DETIK_CLIENT_NAME="kubectl"
     EOS
@@ -29,8 +31,8 @@ class BatsDetik < Formula
   test do
     (testpath/"test.bats").write <<~EOS
       setup() {
-        load '#{HOMEBREW_PREFIX}/lib/bats-detik/lib/utils'
-        load '#{HOMEBREW_PREFIX}/lib/bats-detik/lib/detik'
+        load '#{HOMEBREW_PREFIX}/lib/bats-detik/utils.bash'
+        load '#{HOMEBREW_PREFIX}/lib/bats-detik/detik.bash'
       }
 
       DETIK_CLIENT_NAME="mytest"
