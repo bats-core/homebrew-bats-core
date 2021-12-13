@@ -23,7 +23,25 @@ class BatsAssert < Formula
   end
 
   test do
+    (testpath/"test.bats").write <<~EOS
+      setup() {
+        load '#{HOMEBREW_PREFIX}/lib/bats-support/load.bash'
+        load '#{HOMEBREW_PREFIX}/lib/bats-assert/load.bash'
+      }
+
+      @test "assert true" {
+        assert true
+      }
+
+      @test "refute false" {
+        refute false
+      }
+
+      @test "assert equal" {
+        assert_equal '42' '42'
+      }
+    EOS
     ENV["TEST_DEPS_DIR"] = "#{HOMEBREW_PREFIX}/lib"
-    system "bats", "#{lib}/bats-assert/test"
+    system "bats", "test.bats"
   end
 end
