@@ -16,7 +16,7 @@ jobs:
       - name: Brew version output
         run: brew --version
       - name: INSTALL bats-core
-        run: brew install bats-core
+        run: brew uninstall bats; brew install bats-core
       - name: Bats-support AUDIT
         run: brew audit --new-formula --formula Formula/bats-support.rb
       - name: Bats-support INSTALL
