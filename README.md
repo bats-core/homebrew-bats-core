@@ -12,10 +12,10 @@ $ brew install bats-core
 Then install the desired libraries.
 ```
 $ brew tap bats-core/bats-core
+$ brew install bats-support
 $ brew install bats-assert
 $ brew install bats-file
 $ brew install bats-detik
-$ brew install bats-support
 ```
 
 For brew installations, load the libraries from $(brew --prefix)/lib/ (the brew prefix is /usr/local by default):
