@@ -59,10 +59,8 @@ jobs:
         run: |
           brew list bats && brew uninstall bats || echo "bats is not present"
           brew install bats-core
-      - name: INSTALL bats-support from current branch
-        run: |
-          brew tap bats-core/bats-core --branch ${GITHUB_REF##*/}
-          brew install bats-support
+      - name: INSTALL local bats-support formula
+        run: brew install --build-from-source --verbose bats-support
       - name: Bats-assert AUDIT
         run: brew audit --new-formula --formula Formula/bats-assert.rb
       - name: Bats-assert INSTALL
@@ -83,10 +81,8 @@ jobs:
         run: |
           brew list bats && brew uninstall bats || echo "bats is not present"
           brew install bats-core
-      - name: INSTALL bats-support from current branch
-        run: |
-          brew tap bats-core/bats-core --branch ${GITHUB_REF##*/}
-          brew install bats-support
+      - name: INSTALL local bats-support formula
+        run: brew install --build-from-source --verbose bats-support
       - name: Bats-file AUDIT
         run: brew audit --new-formula --formula Formula/bats-file.rb
       - name: Bats-file INSTALL
