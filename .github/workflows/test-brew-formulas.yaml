@@ -2,12 +2,13 @@ name: test-formulas
 
 on:
   push:
-    branches: [ main ]
+    branches: [ split-github-ci ]
   pull_request:
   workflow_dispatch:
 
 jobs:
-  test-formulas:
+
+  test-support-formula:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,21 +24,64 @@ jobs:
         run: brew install --build-from-source --verbose bats-support
       - name: Bats-support TEST
         run: brew test Formula/bats-support.rb
-      - name: Bats-assert AUDIT
-        run: brew audit --new-formula --formula Formula/bats-assert.rb
-      - name: Bats-assert INSTALL
-        run: brew install --build-from-source --verbose bats-assert
-      - name: Bats-assert TEST
-        run: brew test Formula/bats-assert.rb
-      - name: Bats-file AUDIT
-        run: brew audit --new-formula --formula Formula/bats-file.rb
-      - name: Bats-file INSTALL
-        run: brew install --build-from-source --verbose bats-file
-      - name: Bats-file TEST
-        run: brew test Formula/bats-file.rb
+
+  test-detik-formula:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+      - name: Brew version output
+        run: brew --version
+      - name: INSTALL bats-core
+        run: brew uninstall bats; brew install bats-core
       - name: Bats-detik AUDIT
         run: brew audit --new-formula --formula Formula/bats-detik.rb
       - name: Bats-detik INSTALL
         run: brew install --build-from-source --verbose bats-detik
       - name: Bats-detik TEST
         run: brew test Formula/bats-detik.rb
+
+  test-assert-formula:
+    needs: [test-support-formula]
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+      - name: Brew version output
+        run: brew --version
+      - name: INSTALL bats-core
+        run: brew uninstall bats; brew install bats-core
+      - name: INSTALL bats-support from current branch
+        run: |
+          brew tap bats-core/bats-core --branch ${GITHUB_REF##*/}
+          brew install bats-support
+      - name: Bats-assert AUDIT
+        run: brew audit --new-formula --formula Formula/bats-assert.rb
+      - name: Bats-assert INSTALL
+        run: brew install --build-from-source --verbose bats-assert
+      - name: Bats-assert TEST
+        run: brew test Formula/bats-assert.rb
+
+  test-file-formula:
+    needs: [test-support-formula]
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+      - name: Brew version output
+        run: brew --version
+      - name: INSTALL bats-core
+        run: brew uninstall bats; brew install bats-core
+      - name: INSTALL bats-support from current branch
+        run: |
+          brew tap bats-core/bats-core --branch ${GITHUB_REF##*/}
+          brew install bats-support
+      - name: Bats-file AUDIT
+        run: brew audit --new-formula --formula Formula/bats-file.rb
+      - name: Bats-file INSTALL
+        run: brew install --build-from-source --verbose bats-file
+      - name: Bats-file TEST
+        run: brew test Formula/bats-file.rb
