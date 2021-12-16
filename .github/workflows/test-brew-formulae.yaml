@@ -1,4 +1,4 @@
-name: test-formulas
+name: test-bats-libs-formulae
 
 on:
   push:
