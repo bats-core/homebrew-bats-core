@@ -36,7 +36,9 @@ jobs:
       - name: Brew version output
         run: brew --version
       - name: INSTALL bats-core
-        run: brew uninstall bats; brew install bats-core
+        run: |
+          brew list bats && brew uninstall bats || echo "bats is not present"
+          brew install bats-core
       - name: Bats-detik AUDIT
         run: brew audit --new-formula --formula Formula/bats-detik.rb
       - name: Bats-detik INSTALL
@@ -54,7 +56,9 @@ jobs:
       - name: Brew version output
         run: brew --version
       - name: INSTALL bats-core
-        run: brew uninstall bats; brew install bats-core
+        run: |
+          brew list bats && brew uninstall bats || echo "bats is not present"
+          brew install bats-core
       - name: INSTALL bats-support from current branch
         run: |
           brew tap bats-core/bats-core --branch ${GITHUB_REF##*/}
@@ -76,7 +80,9 @@ jobs:
       - name: Brew version output
         run: brew --version
       - name: INSTALL bats-core
-        run: brew uninstall bats; brew install bats-core
+        run: |
+          brew list bats && brew uninstall bats || echo "bats is not present"
+          brew install bats-core
       - name: INSTALL bats-support from current branch
         run: |
           brew tap bats-core/bats-core --branch ${GITHUB_REF##*/}
