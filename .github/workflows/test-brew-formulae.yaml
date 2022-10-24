@@ -7,9 +7,13 @@ on:
   workflow_dispatch:
 
 jobs:
-
-  test-support-formula:
+  test-packages:
+    strategy:
+      matrix:
+        package: [bats-support, bats-assert, bats-detik, bats-file]
     runs-on: macos-latest
+    env:
+      PACKAGE: ${{ matrix.package }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Homebrew
@@ -20,72 +24,14 @@ jobs:
         run: |
           brew list bats && brew uninstall bats || echo "bats is not present"
           brew install bats-core
-      - name: Bats-support AUDIT
-        run: brew audit --new-formula --formula Formula/bats-support.rb
-      - name: Bats-support INSTALL
+      - name: INSTALL bats-support
+        if: contains(['bats-assert'],env.PACKAGE)
         run: brew install --build-from-source --verbose bats-support
-      - name: Bats-support TEST
-        run: brew test Formula/bats-support.rb
-
-  test-detik-formula:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-      - name: Brew version output
-        run: brew --version
-      - name: INSTALL bats-core
-        run: |
-          brew list bats && brew uninstall bats || echo "bats is not present"
-          brew install bats-core
-      - name: Bats-detik AUDIT
-        run: brew audit --new-formula --formula Formula/bats-detik.rb
-      - name: Bats-detik INSTALL
-        run: brew install --build-from-source --verbose bats-detik
-      - name: Bats-detik TEST
-        run: brew test Formula/bats-detik.rb
-
-  test-assert-formula:
-    needs: [test-support-formula]
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-      - name: Brew version output
-        run: brew --version
-      - name: INSTALL bats-core
-        run: |
-          brew list bats && brew uninstall bats || echo "bats is not present"
-          brew install bats-core
-      - name: INSTALL local bats-support formula
-        run: brew install --build-from-source --verbose bats-support
-      - name: Bats-assert AUDIT
-        run: brew audit --new-formula --formula Formula/bats-assert.rb
-      - name: Bats-assert INSTALL
-        run: brew install --build-from-source --verbose bats-assert
-      - name: Bats-assert TEST
-        run: brew test Formula/bats-assert.rb
-
-  test-file-formula:
-    needs: [test-support-formula]
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-      - name: Brew version output
-        run: brew --version
-      - name: INSTALL bats-core
-        run: |
-          brew list bats && brew uninstall bats || echo "bats is not present"
-          brew install bats-core
-      - name: INSTALL local bats-support formula
-        run: brew install --build-from-source --verbose bats-support
-      - name: Bats-file AUDIT
-        run: brew audit --new-formula --formula Formula/bats-file.rb
-      - name: Bats-file INSTALL
-        run: brew install --build-from-source --verbose bats-file
-      - name: Bats-file TEST
-        run: brew test Formula/bats-file.rb
+      - name: INSTALL local formula
+        run: brew install --build-from-source --verbose $PACKAGE
+      - name: AUDIT
+        run: brew audit --new-formula --formula Formula/$PACKAGE.rb
+      - name: INSTALL
+        run: brew install --build-from-source --verbose $PACKAGE
+      - name: TEST
+        run: brew test Formula/$PACKAGE.rb
