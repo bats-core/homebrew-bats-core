@@ -9,6 +9,7 @@ on:
 jobs:
   test-packages:
     strategy:
+      fail-fast: false
       matrix:
         package: [bats-support, bats-assert, bats-detik, bats-file]
     runs-on: macos-latest
