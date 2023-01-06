@@ -1,0 +1,38 @@
+name: test-bats-libs-formulae
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test-packages:
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [bats-support, bats-assert, bats-detik, bats-file]
+    runs-on: macos-latest
+    env:
+      PACKAGE: ${{ matrix.package }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+      - name: Brew version output
+        run: brew --version
+      - name: INSTALL bats-core
+        run: |
+          brew list bats && brew uninstall bats || echo "bats is not present"
+          brew install bats-core
+      - name: INSTALL bats-support
+        if: ${{ env.PACKAGE == 'bats-assert' || env.PACKAGE == 'bats-file' }}
+        run: brew install --build-from-source --verbose bats-support
+      - name: INSTALL local formula
+        run: brew install --build-from-source --verbose $PACKAGE
+      - name: AUDIT
+        run: brew audit --new-formula --formula Formula/$PACKAGE.rb
+      - name: INSTALL
+        run: brew install --build-from-source --verbose $PACKAGE
+      - name: TEST
+        run: brew test Formula/$PACKAGE.rb
