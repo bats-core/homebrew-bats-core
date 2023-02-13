@@ -1,8 +1,8 @@
 class BatsAssert < Formula
   desc "Common assertions for Bats"
   homepage "https://github.com/bats-core/bats-assert"
-  url "https://github.com/bats-core/bats-assert/archive/refs/tags/v2.0.0.tar.gz"
-  sha256 "15dbf1abb98db785323b9327c86ee2b3114541fe5aa150c410a1632ec06d9903"
+  url "https://github.com/bats-core/bats-assert/archive/refs/tags/v2.1.0.tar.gz"
+  sha256 "98ca3b685f8b8993e48ec057565e6e2abcc541034ed5b0e81f191505682037fd"
   license "MIT"
   head "https://github.com/bats-core/bats-assert.git", branch: "master"
 
