@@ -31,7 +31,7 @@ jobs:
       - name: INSTALL local formula
         run: brew install --build-from-source --verbose $PACKAGE
       - name: AUDIT
-        run: brew audit --new-formula $PACKAGE.rb
+        run: brew audit --new-formula $PACKAGE
       - name: INSTALL
         run: brew install --build-from-source --verbose $PACKAGE
       - name: TEST
