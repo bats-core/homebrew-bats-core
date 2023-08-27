@@ -1,4 +1,4 @@
-name: CI
+name: test-bats-libs-formulae
 
 on:
   push:
@@ -8,18 +8,15 @@ on:
 
 jobs:
   test-packages:
-    name: test-formulae
     strategy:
       fail-fast: false
       matrix:
         package: [bats-support, bats-assert, bats-detik, bats-file]
-        os: [macos-14, macos-15, macos-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: macos-latest
     env:
       PACKAGE: ${{ matrix.package }}
-      TERM: xterm
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v4
+      - uses: actions/checkout@v2
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
       - name: Brew version output
@@ -34,8 +31,8 @@ jobs:
       - name: INSTALL local formula
         run: brew install --build-from-source --verbose $PACKAGE
       - name: AUDIT
-        run: brew audit --new $PACKAGE
+        run: brew audit --new-formula $PACKAGE.rb
       - name: INSTALL
         run: brew install --build-from-source --verbose $PACKAGE
       - name: TEST
-        run: brew test $PACKAGE
+        run: brew test Formula/$PACKAGE.rb
