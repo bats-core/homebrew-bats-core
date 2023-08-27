@@ -2,7 +2,7 @@ class BatsFile < Formula
   desc "Common filesystem assertions for Bats"
   homepage "https://github.com/bats-core/bats-file"
   url "https://github.com/bats-core/bats-file/archive/refs/tags/v0.3.0.tar.gz"
-  sha256 "54d1c8b1908608aef8e46ac17d4001a75119e279662aeac4e5859ce780515362"
+  sha256 "9b69043241f3af1c2d251f89b4fcafa5df3f05e97b89db18d7c9bdf5731bb27a"
   license "MIT"
   head "https://github.com/bats-core/bats-file.git", branch: "master"
 
@@ -19,16 +19,19 @@ class BatsFile < Formula
 
       To load the bats-file lib in your bats test:
 
-          load '#{HOMEBREW_PREFIX}/lib/bats-support/load.bash'
-          load '#{HOMEBREW_PREFIX}/lib/bats-file/load.bash'
+          #Set the bats_lib_path
+          export BATS_LIB_PATH="${BATS_LIB_PATH}:${HOMEBREW_PREFIX}/lib"
+          bats_load_library bats-support
+          bats_load_library bats-file
     EOS
   end
 
   test do
     (testpath/"test.bats").write <<~EOS
       setup() {
-        load '#{HOMEBREW_PREFIX}/lib/bats-support/load.bash'
-        load '#{HOMEBREW_PREFIX}/lib/bats-file/load.bash'
+        export BATS_LIB_PATH="${BATS_LIB_PATH}:${HOMEBREW_PREFIX}/lib"
+        bats_load_library bats-support
+        bats_load_library bats-file
       }
 
       @test 'assert_file_exist() <file>: returns 0 if <file> exists' {
