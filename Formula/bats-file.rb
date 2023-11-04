@@ -1,8 +1,8 @@
 class BatsFile < Formula
   desc "Common filesystem assertions for Bats"
   homepage "https://github.com/bats-core/bats-file"
-  url "https://github.com/bats-core/bats-file/archive/refs/tags/v0.4.0.tar.gz"
-  sha256 "9b69043241f3af1c2d251f89b4fcafa5df3f05e97b89db18d7c9bdf5731bb27a"
+  url "https://github.com/bats-core/bats-file/archive/refs/tags/v0.3.0.tar.gz"
+  sha256 "54d1c8b1908608aef8e46ac17d4001a75119e279662aeac4e5859ce780515362"
   license "MIT"
   head "https://github.com/bats-core/bats-file.git", branch: "master"
 
