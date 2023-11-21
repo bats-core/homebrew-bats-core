@@ -20,7 +20,9 @@ class BatsSupport < Formula
 
       To load the bats-support lib in your bats test:
 
-          load '#{HOMEBREW_PREFIX}/lib/bats-support/load.bash'
+          #Set the bats_lib_path
+          export BATS_LIB_PATH="${BATS_LIB_PATH}:${HOMEBREW_PREFIX}/lib"
+          bats_load_library bats-support
     EOS
   end
 

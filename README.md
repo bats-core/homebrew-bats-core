@@ -6,11 +6,13 @@ Repository for managing bats-core and its dependencies on homebrew
 
 OS X users can use Homebrew to install libraries system-wide
 
-```
+```bash
 $ brew install bats-core
 ```
+
 Then install the desired libraries.
-```
+
+```bash
 $ brew tap bats-core/bats-core
 $ brew install bats-support
 $ brew install bats-assert
@@ -22,8 +24,9 @@ For brew installations, load the libraries from $(brew --prefix)/lib/ (the brew 
 
 ```bash
 TEST_BREW_PREFIX="$(brew --prefix)"
-load "${TEST_BREW_PREFIX}/lib/bats-support/load.bash"
-load "${TEST_BREW_PREFIX}/lib/bats-assert/load.bash"
-load "${TEST_BREW_PREFIX}/lib/bats-file/load.bash"
-load "${TEST_BREW_PREFIX}/lib/bats-detik/load.bash"
+export BATS_LIB_PATH="${BATS_LIB_PATH}:${TEST_BREW_PREFIX}/lib"
+bats_load_library bats-support
+bats_load_library bats-assert
+bats_load_library bats-file
+bats_load_library bats-detik/detik.bash
 ```

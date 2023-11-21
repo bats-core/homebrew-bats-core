@@ -17,16 +17,19 @@ class BatsAssert < Formula
   def caveats
     <<~EOS
       To load the bats-assert lib in your bats test:
-          load '#{HOMEBREW_PREFIX}/lib/bats-support/load.bash'
-          load '#{HOMEBREW_PREFIX}/lib/bats-assert/load.bash'
+          #Set the bats_lib_path
+          export BATS_LIB_PATH="${BATS_LIB_PATH}:${HOMEBREW_PREFIX}/lib"
+          bats_load_library bats-support
+          bats_load_library bats-assert
     EOS
   end
 
   test do
     (testpath/"test.bats").write <<~EOS
       setup() {
-        load '#{HOMEBREW_PREFIX}/lib/bats-support/load.bash'
-        load '#{HOMEBREW_PREFIX}/lib/bats-assert/load.bash'
+        export BATS_LIB_PATH="${BATS_LIB_PATH}:${HOMEBREW_PREFIX}/lib"
+        bats_load_library bats-support
+        bats_load_library bats-assert
       }
 
       @test "assert true" {
