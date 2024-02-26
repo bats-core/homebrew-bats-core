@@ -1,8 +1,8 @@
 class BatsDetik < Formula
   desc "Library to ease e2e tests of applications in K8s environments"
   homepage "https://github.com/bats-core/bats-detik"
-  url "https://github.com/bats-core/bats-detik/archive/refs/tags/v1.2.1.tar.gz"
-  sha256 "af6adfaafc5db94e0beaaace8cf36db01e5c4bca86b0f50740981bc06066d330"
+  url "https://github.com/bats-core/bats-detik/archive/refs/tags/v1.3.0.tar.gz"
+  sha256 "b9557629fc06f03447a6857105385e43524c8d49ec65023f4248e355c9ad5a74"
   license "MIT"
   head "https://github.com/bats-core/bats-detik.git", branch: "master"
 
