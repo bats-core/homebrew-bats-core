@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test-packages:
+    name: test-local-brew
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-12, macos-13, macos-14, macos-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      TERM: xterm
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+      - name: Brew version output
+        run: brew --version
+      - name: INSTALL bats-core
+        run: |
+          brew list bats && brew uninstall bats || echo "bats is not present"
+          brew install bats-core
+      - name: INSTALL bats-libraries
+        run: |
+          brew tap bats-core/bats-core
+          brew install bats-support
+          brew install bats-assert
+          brew install bats-file
+          brew install bats-detik
+      - name: LOCAL TEST
+        run: |
+          bats -T -p tests
