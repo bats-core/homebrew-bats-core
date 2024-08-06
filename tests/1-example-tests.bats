@@ -57,6 +57,9 @@ setup() {
   [ -d "testing/newdir" ]
   assert_success
 
+  run rmdir testing/newdir
+  assert_success
+
   _delete_dir_file
 }
 
@@ -76,12 +79,8 @@ setup() {
   run rm testing/newdir/newfile
   assert_success
 
-  _delete_dir_file
-}
-
-#bats test_tags=github:true
-@test "6: Testing directory and file deletion" {
-  _create_dir_file
+  [ ! -f "testing/newdir/newfile" ]
+  assert_success
 
   run rmdir testing/newdir
   assert_success
@@ -89,9 +88,5 @@ setup() {
   run [ ! -d "testing/newdir" ]
   assert_success
 
-  run rm testing/example
-  assert_success
-
-  [ ! -f "testing/example" ]
-  assert_success
+  _delete_dir_file
 }
