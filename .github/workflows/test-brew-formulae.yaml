@@ -1,4 +1,4 @@
-name: test-bats-libs-formulae
+name: CI
 
 on:
   push:
@@ -8,13 +8,16 @@ on:
 
 jobs:
   test-packages:
+    name: test-formulae
     strategy:
       fail-fast: false
       matrix:
         package: [bats-support, bats-assert, bats-detik, bats-file]
-    runs-on: macos-latest
+        os: [macos-12, macos-13, macos-14, macos-latest]
+    runs-on: ${{ matrix.os }}
     env:
       PACKAGE: ${{ matrix.package }}
+      TERM: xterm
     steps:
       - uses: actions/checkout@v2
       - name: Set up Homebrew
