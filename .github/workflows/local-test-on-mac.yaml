@@ -12,12 +12,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-12, macos-13, macos-14, macos-latest]
+        os: [macos-13, macos-14, macos-15, macos-latest]
     runs-on: ${{ matrix.os }}
     env:
       TERM: xterm
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
       - name: Brew version output
