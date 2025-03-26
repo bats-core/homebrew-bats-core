@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         package: [bats-support, bats-assert, bats-detik, bats-file]
-        os: [macos-12, macos-13, macos-14, macos-latest]
+        os: [macos-13, macos-14, macos-15, macos-latest]
     runs-on: ${{ matrix.os }}
     env:
       PACKAGE: ${{ matrix.package }}
