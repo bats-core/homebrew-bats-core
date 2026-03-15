@@ -38,4 +38,4 @@ jobs:
       - name: INSTALL
         run: brew install --build-from-source --verbose $PACKAGE
       - name: TEST
-        run: brew test Formula/$PACKAGE.rb
+        run: brew test $PACKAGE
