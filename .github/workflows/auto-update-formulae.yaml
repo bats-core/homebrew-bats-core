@@ -1,0 +1,40 @@
+name: Auto Bump Formulae
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  check-versions:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    strategy:
+      matrix:
+        package: [bats-support, bats-assert, bats-detik, bats-file]
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+      - name: Check for updates
+        id: check
+        run: |
+          NEW_VER=$(brew livecheck ${{ matrix.package }} --quiet --newer-only --full-name)
+          if [ -n "$NEW_VER" ]; then
+            echo "version=$NEW_VER" >> $GITHUB_OUTPUT
+            echo "found_update=true" >> $GITHUB_OUTPUT
+            brew bump-formula-pr ${{ matrix.package }} --write --dry-run
+          else
+            echo "found_update=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.check.outputs.found_update == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Update ${{ matrix.package }} to ${{ steps.check.outputs.version }}"
+          title: "Update ${{ matrix.package }} to ${{ steps.check.outputs.version }}"
+          branch: bump-${{ matrix.package }}-${{ steps.check.outputs.version }}
+          delete-branch: true
