@@ -24,7 +24,7 @@ jobs:
           if [ -n "$NEW_VER" ]; then
             echo "version=$NEW_VER" >> $GITHUB_OUTPUT
             echo "found_update=true" >> $GITHUB_OUTPUT
-            brew bump-formula-pr ${{ matrix.package }} --write --dry-run
+            brew bump-formula-pr ${{ matrix.package }} --write
           else
             echo "found_update=false" >> $GITHUB_OUTPUT
           fi
