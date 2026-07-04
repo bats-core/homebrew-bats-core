@@ -21,8 +21,9 @@ class BatsDetik < Formula
     <<~EOS
       To load the bats-detik lib in your bats test:
 
-          load '#{HOMEBREW_PREFIX}/lib/bats-detik/utils.bash'
-          load '#{HOMEBREW_PREFIX}/lib/bats-detik/detik.bash'
+          #Set the bats_lib_path
+          export BATS_LIB_PATH="${BATS_LIB_PATH}:${HOMEBREW_PREFIX}/lib"
+          bats_load_library bats-detik/detik.bash
 
           DETIK_CLIENT_NAME="kubectl"
     EOS
@@ -31,8 +32,8 @@ class BatsDetik < Formula
   test do
     (testpath/"test.bats").write <<~EOS
       setup() {
-        load '#{HOMEBREW_PREFIX}/lib/bats-detik/utils.bash'
-        load '#{HOMEBREW_PREFIX}/lib/bats-detik/detik.bash'
+        export BATS_LIB_PATH="${BATS_LIB_PATH}:${HOMEBREW_PREFIX}/lib"
+        bats_load_library bats-detik/detik.bash
       }
 
       DETIK_CLIENT_NAME="mytest"

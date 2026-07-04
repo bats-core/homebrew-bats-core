@@ -19,16 +19,19 @@ class BatsFile < Formula
 
       To load the bats-file lib in your bats test:
 
-          load '#{HOMEBREW_PREFIX}/lib/bats-support/load.bash'
-          load '#{HOMEBREW_PREFIX}/lib/bats-file/load.bash'
+          #Set the bats_lib_path
+          export BATS_LIB_PATH="${BATS_LIB_PATH}:${HOMEBREW_PREFIX}/lib"
+          bats_load_library bats-support
+          bats_load_library bats-file
     EOS
   end
 
   test do
     (testpath/"test.bats").write <<~EOS
       setup() {
-        load '#{HOMEBREW_PREFIX}/lib/bats-support/load.bash'
-        load '#{HOMEBREW_PREFIX}/lib/bats-file/load.bash'
+        export BATS_LIB_PATH="${BATS_LIB_PATH}:${HOMEBREW_PREFIX}/lib"
+        bats_load_library bats-support
+        bats_load_library bats-file
       }
 
       @test 'assert_file_exist() <file>: returns 0 if <file> exists' {
