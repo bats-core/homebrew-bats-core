@@ -20,8 +20,8 @@ jobs:
       - name: Check for updates
         id: check
         run: |
-          NEW_VER=$(brew livecheck ${{ matrix.package }} --quiet --newer-only --full-name)
-          if [ -n "$NEW_VER" ]; then
+          NEW_VER=$(brew livecheck ${{ matrix.package }} --json | jq -r '.[0].versions.latest // ""')
+          if [ -n "$NEW_VER" ] && [ "$NEW_VER" != "null" ]; then
             echo "version=$NEW_VER" >> $GITHUB_OUTPUT
             echo "found_update=true" >> $GITHUB_OUTPUT
             brew bump-formula-pr ${{ matrix.package }} --write
